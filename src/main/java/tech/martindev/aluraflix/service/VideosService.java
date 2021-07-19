@@ -1,5 +1,6 @@
 package tech.martindev.aluraflix.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tech.martindev.aluraflix.entities.VideosEntity;
@@ -24,6 +25,7 @@ public class VideosService {
         return videosRepository.findAll();
     }
 
+    @Transactional
     public void postVideo(VideosEntity videosEntity){
         videosRepository.save(videosEntity);
     }
@@ -31,7 +33,9 @@ public class VideosService {
     @Transactional
     public ResponseEntity<VideosEntity> putVideo(Long id, VideosEntity videosEntity){
         if (!videosRepository.existsById(id)) return ResponseEntity.notFound().build();
-        videosRepository.save(videosEntity);
+        VideosEntity video = videosRepository.findById(id).orElseThrow();
+        BeanUtils.copyProperties(videosEntity, video, "id");
+        videosRepository.save(video);
         return ResponseEntity.ok().build();
     }
 
