@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Getter
@@ -19,12 +20,15 @@ public class VideosEntity {
     private Long id;
 
     @Column
+    @NotEmpty
     private String titulo;
 
     @Column
+    @NotEmpty
     private String descricao;
 
     @Column
+    @NotEmpty
     private String url;
 
 }
