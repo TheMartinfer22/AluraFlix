@@ -1,9 +1,11 @@
 package tech.martindev.aluraflix.service;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import tech.martindev.aluraflix.entities.VideosEntity;
 import tech.martindev.aluraflix.repository.VideosRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -26,13 +28,17 @@ public class VideosService {
         videosRepository.save(videosEntity);
     }
 
-    public void putVideo(Long id, VideosEntity videosEntity){
-        VideosEntity video = videosRepository.findById(id).orElseThrow();
-        videosRepository.save(video);
+    @Transactional
+    public ResponseEntity<VideosEntity> putVideo(Long id, VideosEntity videosEntity){
+        if (!videosRepository.existsById(id)) return ResponseEntity.notFound().build();
+        videosRepository.save(videosEntity);
+        return ResponseEntity.ok().build();
     }
 
-    public void deleteVideo(Long id){
-        videosRepository.findById(id).orElseThrow();
+    @Transactional
+    public ResponseEntity<VideosEntity> deleteVideo(Long id){
+        if (!videosRepository.existsById(id)) return ResponseEntity.notFound().build();
         videosRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }
