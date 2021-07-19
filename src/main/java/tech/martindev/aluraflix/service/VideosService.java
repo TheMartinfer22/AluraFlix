@@ -27,9 +27,8 @@ public class VideosService {
     }
 
     public void putVideo(Long id, VideosEntity videosEntity){
-        videosRepository.findById(id).ifPresent(videos -> {
-            videosRepository.save(videosEntity);
-        });
+        VideosEntity video = videosRepository.findById(id).orElseThrow();
+        videosRepository.save(video);
     }
 
     public void deleteVideo(Long id){

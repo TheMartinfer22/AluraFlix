@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import tech.martindev.aluraflix.entities.VideosEntity;
 import tech.martindev.aluraflix.service.VideosService;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @RestController
@@ -31,19 +33,19 @@ public class VideosController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/videos")
-    public void postVideo(@RequestBody @NotNull VideosEntity videosEntity){
+    public void postVideo(@RequestBody @NotEmpty VideosEntity videosEntity){
         videosService.postVideo(videosEntity);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(path = "/videos/{id}")
-    public void putVideo(@PathVariable @NotNull Long id, @RequestBody @NotNull VideosEntity videosEntity){
+    public void putVideo(@PathVariable @NotBlank Long id, @RequestBody @NotBlank VideosEntity videosEntity){
         videosService.putVideo(id, videosEntity);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path = "videos/{id}")
-    public void deleteVideo(@PathVariable @NotNull Long id){
+    public void deleteVideo(@PathVariable Long id){
         videosService.deleteVideo(id);
     }
 }
