@@ -20,15 +20,15 @@ public class VideosEntity {
     private Long id;
 
     @Column
-    @NotEmpty
+    @NotEmpty(message = "O título não pode estar vazio.")
     private String titulo;
 
     @Column
-    @NotEmpty
+    @NotEmpty(message = "A descrição não pode estar vazia.")
     private String descricao;
 
     @Column
-    @NotEmpty
+    @NotEmpty(message = "A URL não pode estar vazia.")
     private String url;
 
 }
